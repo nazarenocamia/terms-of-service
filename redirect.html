@@ -4,22 +4,10 @@
   <meta charset="UTF-8" />
   <title>Redirecting...</title>
   <script>
-    // Funzione per prendere i parametri URL
-    function getQueryParam(name) {
-      const urlParams = new URLSearchParams(window.location.search);
-      return urlParams.get(name);
-    }
-
-    window.onload = function() {
-      const code = getQueryParam('code');
-      if (code) {
-        // Cambia 'myapp' con il custom scheme della tua app
-        const redirectUri = `myapp://auth?code=${encodeURIComponent(code)}`;
-        window.location.href = redirectUri;
-      } else {
-        document.body.innerHTML = '<p>Codice di autorizzazione non trovato.</p>';
-      }
-    };
+    const params = new URLSearchParams(window.location.search);
+    const code = params.get('code');
+    const state = params.get('state');
+    window.location.href = `com.nomeapp://callback?code=${code}&state=${state}`;
   </script>
 </head>
 <body>
