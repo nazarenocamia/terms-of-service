@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <title>Redirecting...</title>
+  <script>
+    // Funzione per prendere i parametri URL
+    function getQueryParam(name) {
+      const urlParams = new URLSearchParams(window.location.search);
+      return urlParams.get(name);
+    }
+
+    window.onload = function() {
+      const code = getQueryParam('code');
+      if (code) {
+        // Cambia 'myapp' con il custom scheme della tua app
+        const redirectUri = `myapp://auth?code=${encodeURIComponent(code)}`;
+        window.location.href = redirectUri;
+      } else {
+        document.body.innerHTML = '<p>Codice di autorizzazione non trovato.</p>';
+      }
+    };
+  </script>
+</head>
+<body>
+  <p>Reindirizzamento in corso, attendere...</p>
+  <p>Se non succede nulla, <a id="manual-link" href="#">clicca qui</a>.</p>
+
+  <script>
+    // Link manuale nel caso il redirect automatico fallisca
+    const code = new URLSearchParams(window.location.search).get('code');
+    if (code) {
+      document.getElementById('manual-link').href = `myapp://auth?code=${encodeURIComponent(code)}`;
+    } else {
+      document.getElementById('manual-link').style.display = 'none';
+    }
+  </script>
+</body>
+</html>
